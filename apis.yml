@@ -1,9 +1,29 @@
 aid: arphie
 name: Arphie
-description: 'Arphie is a company surfaced as a portfolio company of general-catalyst and added to the
-  API Evangelist network as a stub for enrichment. Sector: enterprise. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  Arphie is an AI-powered knowledge activation platform that helps go-to-market teams
+  automate RFP (Request for Proposal) responses, security questionnaires, and due-diligence
+  questionnaires. Its AI agents draft answers from a company's knowledge base, cite sources
+  with confidence scores, and integrate with knowledge sources such as Google Drive, SharePoint,
+  Confluence, Notion, Seismic, and Highspot. Arphie is used by high-growth and publicly traded
+  companies to win more deals faster while keeping proposal content accurate, current, and
+  auditable. The company is SOC 2 Type 2 compliant, operates zero data retention with model
+  providers, supports SAML 2.0 SSO and role-based access controls, and is backed by General
+  Catalyst. This profile was surfaced as a portfolio lead and enriched by the API Evangelist
+  pipeline; Arphie publishes a product and security surface but no public developer API.
 url: https://raw.githubusercontent.com/api-evangelist/arphie/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/672fc2345132970736914ada/67313797c7d6407f3b2c8a39_Arphie%20Social.jpg
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
@@ -12,13 +32,51 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Enterprise
+- Artificial Intelligence
+- Sales Enablement
+- RFP Automation
+- Security Questionnaires
+- Knowledge Management
+- Go-To-Market
 apis: []
+common:
+- type: DomainSecurity
+  url: security/arphie-domain-security.yml
+- type: Website
+  url: https://www.arphie.ai/
+- type: DeveloperPortal
+  url: https://www.arphie.ai/
+- type: SignUp
+  url: https://app.arphie.ai/
+- type: Login
+  url: https://app.arphie.ai/
+- type: Blog
+  url: https://www.arphie.ai/blog
+- type: Support
+  url: https://www.arphie.ai/contact
+- type: Compliance
+  url: https://www.arphie.ai/security
+- type: Security
+  url: https://www.arphie.ai/responsible-disclosure-policy
+- type: VulnerabilityDisclosure
+  url: security/arphie-vulnerability-disclosure.yml
+- type: TermsOfService
+  url: https://www.arphie.ai/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.arphie.ai/privacy-policy
+- type: Integrations
+  url: https://www.arphie.ai/integrations
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
