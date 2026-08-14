@@ -9,8 +9,12 @@ description: >-
   companies to win more deals faster while keeping proposal content accurate, current, and
   auditable. The company is SOC 2 Type 2 compliant, operates zero data retention with model
   providers, supports SAML 2.0 SSO and role-based access controls, and is backed by General
-  Catalyst. This profile was surfaced as a portfolio lead and enriched by the API Evangelist
-  pipeline; Arphie publishes a product and security surface but no public developer API.
+  Catalyst. Arphie publishes no REST API and no OpenAPI, but it does operate a live, remote
+  Model Context Protocol server at https://app.arphie.ai/api/mcp — OAuth-protected, with RFC
+  9728 protected-resource discovery — that brings Arphie projects, workload metrics, and
+  agentic chat into Claude, ChatGPT, Cursor, an IDE, or the terminal. Arphie also serves an
+  llms.txt for AI agents. This profile was surfaced as a portfolio lead and enriched by the
+  API Evangelist pipeline.
 url: https://raw.githubusercontent.com/api-evangelist/arphie/refs/heads/main/apis.yml
 accessModel:
   pricing: unknown
@@ -32,7 +36,7 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-13'
 tags:
 - Company
 - Enterprise
@@ -42,7 +46,30 @@ tags:
 - Security Questionnaires
 - Knowledge Management
 - Go-To-Market
-apis: []
+- MCP
+- Agents
+apis:
+- name: Arphie MCP
+  description: >-
+    Arphie's remote Model Context Protocol server. It exposes Arphie projects, workload and
+    project-volume metrics, and the company's agentic chat engine to MCP clients such as
+    Claude, ChatGPT, Cursor, an IDE, or a terminal. The endpoint is JSON-RPC over HTTP POST
+    and is protected by OAuth 2.1 bearer tokens, with RFC 9728 protected-resource metadata
+    advertised in the 401 challenge and a Supabase authorization server behind it that
+    supports PKCE and dynamic client registration. Arphie publishes no setup documentation
+    for it: the endpoint recorded here was confirmed by probe, not by a published reference.
+  humanURL: https://www.arphie.ai/integrations/arphie-mcp
+  baseURL: https://app.arphie.ai/api/mcp
+  tags:
+  - MCP
+  - Agents
+  - RFP Automation
+  - Knowledge Management
+  properties:
+  - type: MCPServer
+    url: mcp/arphie-mcp.yml
+  - type: Documentation
+    url: https://docs.arphie.ai/
 common:
 - type: DomainSecurity
   url: security/arphie-domain-security.yml
@@ -70,13 +97,45 @@ common:
   url: https://www.arphie.ai/privacy-policy
 - type: Integrations
   url: https://www.arphie.ai/integrations
+- type: Documentation
+  url: https://docs.arphie.ai/
+- type: GettingStarted
+  url: https://docs.arphie.ai/docs/intro
+- type: MCPServer
+  url: mcp/arphie-mcp.yml
+- type: LLMsTxt
+  url: llms/arphie-llms.txt
+- type: WellKnown
+  url: well-known/arphie-well-known.yml
+- type: Authentication
+  url: authentication/arphie-authentication.yml
+- type: OAuthScopes
+  url: scopes/arphie-scopes.yml
+- type: Conformance
+  url: conformance/arphie-conformance.yml
+- type: Conventions
+  url: conventions/arphie-conventions.yml
+- type: Lifecycle
+  url: lifecycle/arphie-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/arphie-rate-limits.yml
+- type: Plans
+  url: plans/arphie-plans-pricing.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 13
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    No REST API and no OpenAPI (probed /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs, /docs, /redoc on www., api., app. and docs.arphie.ai — all
+    404). STEP 0b contract discovery instead found a live, OAuth-protected remote MCP server
+    at https://app.arphie.ai/api/mcp (401 with RFC 9728 resource_metadata; control paths
+    404), which is Arphie's real machine-readable surface. tools/list is auth-gated, so tool
+    names and inputSchemas are not recorded. No A2A agent card (every /.well-known/* on
+    app.arphie.ai is an SPA shell). Pricing is a password-protected 401.
