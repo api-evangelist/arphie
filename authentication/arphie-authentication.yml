@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: probed
+source: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+docs: https://www.arphie.ai/security
+note: >-
+  Arphie publishes no REST OpenAPI, so there are no securitySchemes to derive from. The
+  authentication profile below is read from live, anonymous, machine-readable metadata:
+  the RFC 9728 protected-resource document the Arphie MCP server advertises in its 401
+  challenge, plus the RFC 8414 authorization-server metadata that document points at.
+summary:
+  types: [oauth2]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  bearer_methods: [header]
+  applies_to: Arphie MCP server (https://app.arphie.ai/api/mcp)
+schemes:
+- name: ArphieMCPOAuth
+  type: oauth2
+  source: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+  resource: https://app.arphie.ai/api/mcp
+  resource_name: Arphie MCP
+  bearer_methods_supported: [header]
+  scopes_supported: [email]
+  flows:
+  - flow: authorizationCode
+    issuer: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1
+    authorizationUrl: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/authorize
+    tokenUrl: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/token
+    userinfoUrl: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/userinfo
+    jwksUri: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/jwks.json
+    registrationEndpoint: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/clients/register
+    grantTypes: [authorization_code, refresh_token]
+    codeChallengeMethods: [S256, plain]
+    tokenEndpointAuthMethods: [client_secret_basic, client_secret_post, none]
+    idTokenSigningAlgs: [RS256, HS256, ES256]
+    scopes: [openid, profile, email, phone, offline_access]
+end_user_authentication:
+  sso: true
+  protocols: [SAML 2.0, Google authentication]
+  identity_providers_named: [Okta, OneLogin, Microsoft Azure, ADFS]
+  rbac: true
+  rbac_note: Customer-defined user roles with read-only or read-and-write permissions.
+  source: https://www.arphie.ai/security
+gaps:
+- No API keys, no personal access tokens, and no published authentication reference for developers.
+- >-
+  The only authenticated machine surface is the MCP server; there is no documented REST
+  API and therefore no REST auth model.
+x-evidence:
+- url: https://app.arphie.ai/api/mcp
+  http_status: 401
+- url: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+  http_status: 200
+- url: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
+  http_status: 200
+- url: https://www.arphie.ai/security
+  http_status: 200

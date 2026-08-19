@@ -1,0 +1,42 @@
+generated: '2026-08-13'
+method: probed
+source: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+note: >-
+  Arphie publishes no OpenAPI and no human-readable scopes/permissions reference, so
+  derive-oauth-scopes.py had nothing to read. Every scope below comes from live,
+  anonymous OAuth discovery metadata. The Arphie MCP server's protected-resource
+  document declares exactly ONE supported scope (`email`); the Supabase authorization
+  server behind it advertises the standard OIDC scope set. Nothing here is inferred.
+schemes:
+- name: ArphieMCPOAuth
+  source: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+  resource: https://app.arphie.ai/api/mcp
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/authorize
+    tokenUrl: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/token
+scopes:
+- scope: email
+  description: >-
+    The only scope the Arphie MCP protected-resource metadata declares as supported for
+    https://app.arphie.ai/api/mcp.
+  flows: [authorizationCode]
+  declared_by: resource
+  sources: [https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp]
+authorization_server_scopes:
+- scope: openid
+  declared_by: authorization-server
+- scope: profile
+  declared_by: authorization-server
+- scope: email
+  declared_by: authorization-server
+- scope: phone
+  declared_by: authorization-server
+- scope: offline_access
+  declared_by: authorization-server
+authorization_server_scopes_source: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
+gaps:
+- >-
+  There is no Arphie-authored permission model in the OAuth layer — no read/write scopes,
+  no per-resource scopes. Authorization inside the product is handled by Arphie's
+  role-based access controls after identity is established, not by OAuth scope.

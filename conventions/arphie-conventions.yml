@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  mcp/arphie-mcp.yml, authentication/arphie-authentication.yml,
+  well-known/arphie-well-known.yml — plus live headers observed on
+  https://app.arphie.ai/api/mcp
+note: >-
+  Arphie publishes no API reference, so there is no documented convention set. Everything
+  below is what could be OBSERVED on the one machine surface Arphie operates (the MCP
+  server) or read from its discovery metadata. Fields with no evidence are recorded as
+  unknown rather than guessed.
+surface:
+  primary: MCP (JSON-RPC 2.0 over HTTP POST)
+  endpoint: https://app.arphie.ai/api/mcp
+  rest_api: false
+  graphql: false
+authentication:
+  style: OAuth 2.1 bearer token in the Authorization header
+  discovery: RFC 9728 protected-resource metadata advertised in the 401 challenge
+  ref: authentication/arphie-authentication.yml
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    No idempotency key is documented and none could be observed — MCP tool calls carry a
+    JSON-RPC `id` for request/response correlation, which is NOT an idempotency key. No
+    Idempotency pointer is emitted in apis.yml.
+pagination:
+  style: unknown
+  note: MCP list results support the protocol's opaque `cursor`, but Arphie's use of it is auth-gated.
+versioning:
+  style: none-in-path
+  note: MCP protocol version is negotiated in the initialize handshake, which requires a token.
+request_tracing:
+  header: x-request-id
+  observed: true
+  note: >-
+    Every response from https://app.arphie.ai/api/mcp carries an `x-request-id` UUID plus a
+    Vercel `x-vercel-id`. Arphie does not document either, but x-request-id is a usable
+    support correlation handle.
+error_envelope:
+  format: oauth2-error
+  observed_shape: '{"error": "...", "error_description": "..."}'
+  observed_on: 401 from https://app.arphie.ai/api/mcp
+  problem_json: false
+  note: >-
+    Only the auth-layer error envelope is observable. Tool-level errors are behind the
+    token and are presumed to use the JSON-RPC 2.0 error object, but this was not verified.
+rate_limit_signaling:
+  headers: []
+  note: No RateLimit-* / X-RateLimit-* / Retry-After headers observed. See rate-limits/arphie-rate-limits.yml.
+transport_security:
+  hsts: true
+  hsts_max_age: 63072000
+  observed_on: https://app.arphie.ai/api/mcp
+  extra_headers:
+  - x-content-type-options: nosniff
+  - x-frame-options: DENY
+  - x-robots-tag: noindex
+  - cache-control: no-store
+cross_links:
+  authentication: authentication/arphie-authentication.yml
+  scopes: scopes/arphie-scopes.yml
+  lifecycle: lifecycle/arphie-lifecycle.yml
+  rate_limits: rate-limits/arphie-rate-limits.yml
+  mcp: mcp/arphie-mcp.yml
+  well_known: well-known/arphie-well-known.yml

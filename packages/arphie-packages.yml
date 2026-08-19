@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, registry.modelcontextprotocol.io, github.com search,
+  chromewebstore.google.com search, https://www.arphie.ai/integrations
+package_count: 0
+packages: []
+note: >-
+  Arphie ships no client libraries. Searched and found nothing: npm registry search for
+  "arphie" returns 0 packages; https://pypi.org/pypi/arphie/json returns 404; the MCP
+  registry (registry.modelcontextprotocol.io) returns 0 servers for "arphie"; the GitHub
+  code search surfaces only third-party/personal repos (github.com/arphie is an unrelated
+  individual, Kenneth Arphel Balboa, not the company — Arphie, Inc. operates no public
+  GitHub organization). The Arphie MCP server is REMOTE-ONLY, so there is deliberately no
+  stdio package to install.
+registries_checked:
+- registry: npm
+  query: https://registry.npmjs.org/-/v1/search?text=arphie
+  result_count: 0
+- registry: pypi
+  query: https://pypi.org/pypi/arphie/json
+  http_status: 404
+- registry: mcp
+  query: https://registry.modelcontextprotocol.io/v0/servers?search=arphie
+  result_count: 0
+- registry: github
+  query: https://api.github.com/search/repositories?q=arphie
+  result_count: 6
+  note: No repository owned by Arphie, Inc.; all hits are unrelated third parties.
+- registry: chrome-web-store
+  query: https://chromewebstore.google.com/search/arphie
+  result_count: 0
+  note: >-
+    Arphie's own docs document a Chrome extension (docs.arphie.ai/docs/extension-plug-in/*)
+    but no public Chrome Web Store listing was found — the extension appears to be
+    distributed to customers rather than publicly listed. version: null, published: null.
+distributed_clients:
+- name: Arphie Chrome extension
+  registry: none
+  url: https://docs.arphie.ai/docs/category/chrome-extension-and-slack-integration
+  version: null
+  published: null
+  official: true
+  note: >-
+    Documented by Arphie but not publicly listed in the Chrome Web Store, so there is no
+    metadata endpoint and no version a consumer can pin. Recorded as checked-and-absent,
+    not as a guess.
+- name: Arphie Slack integration
+  registry: none
+  url: https://docs.arphie.ai/docs/extension-plug-in/how-to-install-the-slack-integration
+  version: null
+  published: null
+  official: true
+  note: >-
+    Installed from inside the Arphie app per the install doc; no Slack App Directory
+    listing was found, so no version metadata exists to record.

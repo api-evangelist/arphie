@@ -1,0 +1,26 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.arphie.ai (full route list), https://www.arphie.ai/llms.txt,
+  https://www.arphie.ai/integrations/arphie-mcp
+limit_count: 0
+limits: []
+headers: []
+note: >-
+  Arphie documents no rate limits anywhere. docs.arphie.ai is an end-user help centre
+  (projects, knowledge base, Chrome extension, Slack, FAQs) with no developer or API
+  section — its complete route list was read from the Docusaurus bundle and contains no
+  rate-limit, quota or throttling page. The only machine surface, the MCP server at
+  https://app.arphie.ai/api/mcp, rejects unauthenticated calls with 401 and returns no
+  RateLimit-* or X-RateLimit-* headers on that response, so no runtime signal could be
+  observed either.
+observed_response_headers:
+  endpoint: https://app.arphie.ai/api/mcp
+  status_observed: 401
+  ratelimit_headers_present: false
+  retry_after_present: false
+x-evidence:
+- url: https://app.arphie.ai/api/mcp
+  http_status: 401
+- url: https://docs.arphie.ai/
+  http_status: 200

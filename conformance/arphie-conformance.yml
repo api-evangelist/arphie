@@ -1,0 +1,94 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Live OAuth discovery metadata for the Arphie MCP server plus Arphie's published security
+  page. Arphie ships no OpenAPI, so nothing here is derived from a spec.
+standards:
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: >-
+    https://app.arphie.ai/api/mcp answers POST-only (405 on GET with `Allow: POST, OPTIONS`)
+    and returns an MCP-shaped OAuth challenge on an unauthenticated tools/list call.
+- id: oauth2
+  name: OAuth 2.0 / 2.1 authorization code
+  conforms: true
+  evidence: >-
+    Authorization server advertises grant_types_supported [authorization_code, refresh_token]
+    with response_types_supported [code].
+- id: rfc9728-protected-resource-metadata
+  name: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: >-
+    401 response carries WWW-Authenticate with resource_metadata=; that URL returns a valid
+    protected-resource document naming resource, authorization_servers, scopes_supported and
+    bearer_methods_supported.
+- id: rfc8414-authorization-server-metadata
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: >-
+    https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
+    returns 200 with issuer, authorization_endpoint, token_endpoint, jwks_uri.
+- id: rfc7591-dynamic-client-registration
+  name: OAuth 2.0 Dynamic Client Registration
+  conforms: true
+  evidence: registration_endpoint published at /auth/v1/oauth/clients/register.
+- id: rfc7636-pkce
+  name: PKCE
+  conforms: true
+  evidence: code_challenge_methods_supported [S256, plain].
+- id: rfc6750-bearer
+  name: OAuth 2.0 Bearer Token Usage
+  conforms: true
+  evidence: bearer_methods_supported [header]; challenge uses the Bearer scheme.
+- id: oidc
+  name: OpenID Connect Core
+  conforms: partial
+  evidence: >-
+    The authorization server publishes an OIDC discovery document with openid scope, a
+    userinfo endpoint and id_token signing algs — but Arphie's own protected resource only
+    declares the `email` scope, so the MCP surface does not require an OIDC flow.
+- id: saml2
+  name: SAML 2.0 SSO
+  conforms: true
+  evidence: >-
+    "SAML 2.0 and Google authentication" with Okta, OneLogin, Microsoft Azure and ADFS named
+    on https://www.arphie.ai/security. This is end-user SSO, not API authorization.
+- id: soc2-type2
+  name: SOC 2 Type 2
+  conforms: true
+  evidence: >-
+    "evaluated annually via a SOC 2 Type 2 audit conducted by an independent firm" —
+    https://www.arphie.ai/security
+- id: rfc9116-security-txt
+  name: security.txt
+  conforms: false
+  evidence: 404 on www.arphie.ai and api.arphie.ai; SPA shell (not a document) on app.arphie.ai.
+- id: rfc9457-problem-details
+  name: RFC 9457 Problem Details
+  conforms: unknown
+  evidence: No public REST API and no published error reference to evaluate.
+- id: openapi
+  name: OpenAPI
+  conforms: false
+  evidence: >-
+    No OpenAPI/Swagger document found on www.arphie.ai, api.arphie.ai, app.arphie.ai or
+    docs.arphie.ai after probing /openapi.json, /openapi.yaml, /swagger.json,
+    /v1/openapi.json, /api-docs, /docs and /redoc on every host.
+- id: iso27001
+  name: ISO/IEC 27001
+  conforms: unknown
+  evidence: Not claimed on Arphie's published security page.
+compliance_published:
+  certifications: [SOC 2 Type 2]
+  practices:
+  - Annual third-party penetration testing
+  - TLS v1.2 in transit, AES-256 at rest
+  - Zero Data Retention agreements with OpenAI and Anthropic
+  - Annual security training for all employees
+  - Role-based access controls and audit logging
+  page: https://www.arphie.ai/security
+  trust_center: false
+  trust_center_note: >-
+    No trust.arphie.ai (DNS does not resolve) and no compliance-report request portal;
+    SOC 2 evidence is obtained through sales.

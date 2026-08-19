@@ -1,0 +1,1 @@
+{"resource":"https://app.arphie.ai/api/mcp","resource_name":"Arphie MCP","authorization_servers":["https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1"],"scopes_supported":["email"],"bearer_methods_supported":["header"]}

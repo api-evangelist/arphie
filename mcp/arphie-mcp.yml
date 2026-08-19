@@ -1,0 +1,97 @@
+generated: '2026-08-13'
+method: probed
+status: published
+source: https://www.arphie.ai/integrations/arphie-mcp
+endpoint_evidence: >-
+  POST https://app.arphie.ai/api/mcp with {"jsonrpc":"2.0","id":1,"method":"tools/list"}
+  returned HTTP 401 with
+  WWW-Authenticate: Bearer error="invalid_token", error_description="Missing Authorization header",
+  resource_metadata="https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp".
+  GET on the same path returns 405 with `Allow: POST, OPTIONS`. The advertised
+  resource_metadata URL returns 200 application/json naming resource
+  "https://app.arphie.ai/api/mcp" and resource_name "Arphie MCP". Control probes on
+  neighbouring paths (/api/mcp-nope, /api/zzz-not-real) return 404, so this is a real
+  route and not a catch-all. The endpoint was CONFIRMED by probe, not guessed.
+deployment:
+  mode: remote
+  endpoint: https://app.arphie.ai/api/mcp
+  auth: oauth
+  verified: probed
+server:
+  name: Arphie MCP
+  transport: http
+  url: https://app.arphie.ai/api/mcp
+  humanURL: https://www.arphie.ai/integrations/arphie-mcp
+  vendor: Arphie, Inc.
+  category: Data Source
+authentication:
+  scheme: OAuth 2.1 bearer token (RFC 6750 header method)
+  protected_resource_metadata: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+  authorization_server: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1
+  authorization_endpoint: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/authorize
+  token_endpoint: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/token
+  dynamic_client_registration: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/oauth/clients/register
+  pkce: [S256, plain]
+  scopes_supported: [email]
+  bearer_methods_supported: [header]
+  note: >-
+    Arphie fronts the MCP server with Supabase Auth as the authorization server. Dynamic
+    client registration (RFC 7591) is open, so a compliant MCP client can complete the
+    OAuth handshake without a pre-provisioned client id — but a real Arphie account is
+    still required to obtain a token.
+tools:
+  status: gated
+  note: >-
+    tools/list is auth-gated (401 without a bearer token), so the live tool names and
+    inputSchemas could not be enumerated. NO TOOL NAMES ARE INVENTED HERE. The capability
+    areas below are quoted from Arphie's own product pages and describe what the MCP
+    exposes, not the wire-level tool identifiers.
+capabilities_documented:
+- area: agentic chat
+  description: >-
+    "Query Arphie's patented agentic engine from Claude, your IDE, or the terminal — no
+    context-switching required."
+  source: https://www.arphie.ai/
+- area: projects
+  description: >-
+    "Check active project status, assignments, and due dates without ever leaving your
+    workflow."
+  source: https://www.arphie.ai/
+- area: metrics
+  description: >-
+    "Pull workload and project-volume trends for any person or team, right when you need
+    them."
+  source: https://www.arphie.ai/
+clients_documented:
+- Claude
+- ChatGPT
+- Cursor
+- IDE / terminal
+clients_source: https://www.arphie.ai/integrations/arphie-mcp
+x-evidence:
+- url: https://app.arphie.ai/api/mcp
+  method: POST
+  http_status: 401
+  fetched: '2026-08-13'
+- url: https://app.arphie.ai/.well-known/oauth-protected-resource/api/mcp
+  method: GET
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
+  method: GET
+  http_status: 200
+  fetched: '2026-08-13'
+- url: https://www.arphie.ai/integrations/arphie-mcp
+  method: GET
+  http_status: 200
+  fetched: '2026-08-13'
+gaps:
+- >-
+  Arphie publishes no setup documentation for the MCP server — the integration page has a
+  "Setup your Integration" section but renders no endpoint URL, no config snippet and no
+  install command. The endpoint recorded here was found by probing, which no ordinary
+  consumer would do.
+- >-
+  No MCP registry listing (registry.modelcontextprotocol.io search for "arphie" returns 0),
+  no npm or PyPI package, and no server card.
+- The remote server is not listed in any /.well-known/api-catalog.

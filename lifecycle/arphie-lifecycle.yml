@@ -1,0 +1,49 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://www.arphie.ai/ (footer + nav), https://docs.arphie.ai (full Docusaurus route list),
+  https://www.arphie.ai/llms.txt
+versioning:
+  scheme: null
+  current: null
+  docs: null
+  note: >-
+    No API versioning policy is published. The MCP endpoint carries no version segment
+    (https://app.arphie.ai/api/mcp) and MCP protocol version negotiation happens inside the
+    auth-gated initialize handshake.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  note: No deprecation or sunset policy published. RFC 8594 support could not be observed on the 401 response.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  url: null
+  note: >-
+    No status page. status.arphie.ai does not resolve (DNS NXDOMAIN) and
+    https://www.arphie.ai/status returns 404.
+changelog:
+  url: null
+  note: >-
+    No dated changelog. https://www.arphie.ai/changelog returns 404; product news is mixed
+    into the blog at https://www.arphie.ai/blog with no release/version structure.
+roadmap:
+  url: null
+  note: https://www.arphie.ai/roadmap returns 404.
+deprecated_operations: []
+x-evidence:
+- url: https://www.arphie.ai/status
+  http_status: 404
+- url: https://status.arphie.ai/
+  http_status: 0
+  note: DNS does not resolve
+- url: https://www.arphie.ai/changelog
+  http_status: 404
+- url: https://www.arphie.ai/roadmap
+  http_status: 404
+gaps:
+- >-
+  Arphie runs a live, OAuth-protected MCP server in production with no status page, no
+  changelog, no versioning statement and no deprecation policy — an agent integrating
+  against it has no published way to learn that the surface changed.

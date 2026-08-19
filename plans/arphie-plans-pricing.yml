@@ -1,0 +1,24 @@
+generated: '2026-08-13'
+method: probed
+source: https://www.arphie.ai/pricing
+plan_count: 0
+currency: null
+plans: []
+note: >-
+  Arphie publishes no pricing. https://www.arphie.ai/pricing returns HTTP 401 — it is a
+  Webflow password-protected page (the response sets a `wf_auth_page` cookie and serves the
+  Webflow password gate), so even the tier names are not public. There is no pricing entry
+  in the site navigation, no pricing page in the llms.txt key-pages list, and no
+  machine-readable catalog endpoint. Commercial terms are quoted through the "Contact"
+  and "Request a Demo" flows only.
+gate:
+  type: password-protected-page
+  status: 401
+  cta: https://www.arphie.ai/demo
+x-evidence:
+- url: https://www.arphie.ai/pricing
+  http_status: 401
+- url: https://www.arphie.ai/demo
+  http_status: 200
+- url: https://www.arphie.ai/llms.txt
+  http_status: 200

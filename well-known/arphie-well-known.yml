@@ -1,0 +1,100 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of every Arphie host in apis.yml
+note: >-
+  Only one /.well-known/ path on any Arphie host returns a real document: the RFC 9728
+  OAuth Protected Resource Metadata for the Arphie MCP server, advertised by the
+  WWW-Authenticate challenge on https://app.arphie.ai/api/mcp. Every other /.well-known/
+  path on app.arphie.ai returns HTTP 200 with the SvelteKit single-page-app HTML shell,
+  NOT a document — those are recorded as misses, not hits. www.arphie.ai (Webflow) and
+  api.arphie.ai (AWS API Gateway) return honest 404s.
+hosts:
+- host: https://app.arphie.ai
+  documents:
+  - path: /.well-known/oauth-protected-resource/api/mcp
+    status: 200
+    content_type: application/json
+    file: arphie-oauth-protected-resource.json
+    real_document: true
+    note: RFC 9728 Protected Resource Metadata for the Arphie MCP server.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: text/html
+    real_document: false
+    note: SPA catch-all HTML shell — not a document.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: text/html
+    real_document: false
+    note: SPA catch-all HTML shell — not a document.
+  - path: /.well-known/openid-configuration
+    status: 200
+    content_type: text/html
+    real_document: false
+    note: SPA catch-all HTML shell — not a document.
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    real_document: false
+    note: SPA catch-all HTML shell — not a document. Arphie serves no RFC 9116 security.txt.
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: text/html
+    real_document: false
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    real_document: false
+    note: SPA catch-all. No A2A Agent Card — no a2a/ artifact was written.
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: text/html
+    real_document: false
+- host: https://www.arphie.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.arphie.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+authorization_server:
+  issuer: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1
+  discovery: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
+  status: 200
+  file: arphie-oauth-authorization-server.json
+  note: >-
+    Third-party authorization server (Supabase Auth) named by Arphie's own protected-resource
+    metadata. Saved because it is the anonymous, machine-readable description of how an agent
+    authorizes against the Arphie MCP server.
+security_txt: false
