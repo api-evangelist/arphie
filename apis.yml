@@ -44,6 +44,17 @@ tags:
 - Sales Enablement
 - RFP Automation
 - Security Questionnaires
+- Knowledge-Management
+- Go-To-Market
+- MCP
+- Agents
+tags_raw:
+- Company
+- Enterprise
+- Artificial Intelligence
+- Sales Enablement
+- RFP Automation
+- Security Questionnaires
 - Knowledge Management
 - Go-To-Market
 - MCP
@@ -61,6 +72,11 @@ apis:
   humanURL: https://www.arphie.ai/integrations/arphie-mcp
   baseURL: https://app.arphie.ai/api/mcp
   tags:
+  - MCP
+  - Agents
+  - RFP Automation
+  - Knowledge-Management
+  tags_raw:
   - MCP
   - Agents
   - RFP Automation
