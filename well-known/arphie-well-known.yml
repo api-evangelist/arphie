@@ -1,13 +1,17 @@
-generated: '2026-08-13'
+generated: '2026-09-19'
 method: probed
 source: live GET probes of every Arphie host in apis.yml
-note: >-
-  Only one /.well-known/ path on any Arphie host returns a real document: the RFC 9728
-  OAuth Protected Resource Metadata for the Arphie MCP server, advertised by the
-  WWW-Authenticate challenge on https://app.arphie.ai/api/mcp. Every other /.well-known/
-  path on app.arphie.ai returns HTTP 200 with the SvelteKit single-page-app HTML shell,
-  NOT a document — those are recorded as misses, not hits. www.arphie.ai (Webflow) and
-  api.arphie.ai (AWS API Gateway) return honest 404s.
+note: 'Only one /.well-known/ path on any Arphie host returns a real document: the RFC 9728 OAuth Protected
+  Resource Metadata for the Arphie MCP server, advertised by the WWW-Authenticate challenge on https://app.arphie.ai/api/mcp.
+  Every other /.well-known/ path on app.arphie.ai returns HTTP 200 with the SvelteKit single-page-app
+  HTML shell, NOT a document — those are recorded as misses, not hits. www.arphie.ai (Webflow) and api.arphie.ai
+  (AWS API Gateway) return honest 404s.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
 hosts:
 - host: https://app.arphie.ai
   documents:
@@ -88,13 +92,28 @@ hosts:
     status: 404
   - path: /.well-known/agent.json
     status: 404
+- host: https://ogxxofxbnksprbjqojnc.supabase.co
+  documents:
+  - path: /auth/v1/.well-known/oauth-authorization-server
+    status: 200
+    file: arphie-ogxxofxbnksprbjqojnc-oauth-authorization-server.json
+    bytes: 1143
+  path_echo_control: passed
 authorization_server:
   issuer: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1
   discovery: https://ogxxofxbnksprbjqojnc.supabase.co/auth/v1/.well-known/oauth-authorization-server
   status: 200
   file: arphie-oauth-authorization-server.json
-  note: >-
-    Third-party authorization server (Supabase Auth) named by Arphie's own protected-resource
-    metadata. Saved because it is the anonymous, machine-readable description of how an agent
-    authorizes against the Arphie MCP server.
+  note: Third-party authorization server (Supabase Auth) named by Arphie's own protected-resource metadata.
+    Saved because it is the anonymous, machine-readable description of how an agent authorizes against
+    the Arphie MCP server.
 security_txt: false
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://ogxxofxbnksprbjqojnc.supabase.co
+    path: /auth/v1/.well-known/oauth-authorization-server
+    file: arphie-ogxxofxbnksprbjqojnc-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host
