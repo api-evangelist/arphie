@@ -59,7 +59,7 @@ tags:
 - Sales Enablement
 - RFP Automation
 - Security Questionnaires
-- Knowledge-Management
+- Knowledge Management
 - Go-To-Market
 - MCP
 - Agents
@@ -74,6 +74,7 @@ tags_raw:
 - Go-To-Market
 - MCP
 - Agents
+- Knowledge-Management
 apis:
 - name: Arphie MCP
   description: >-
@@ -90,12 +91,13 @@ apis:
   - MCP
   - Agents
   - RFP Automation
-  - Knowledge-Management
+  - Knowledge Management
   tags_raw:
   - MCP
   - Agents
   - RFP Automation
   - Knowledge Management
+  - Knowledge-Management
   properties:
   - type: MCPServer
     url: mcp/arphie-mcp.yml
